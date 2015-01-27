@@ -1,0 +1,47 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    background: #3A3A3A;
+    font-family: Tahoma, sans-serif;
+    font-size: 13px;
+}
+
+#game,
+#map,
+#chat,
+#inventory {
+    overflow: hidden;
+    position: absolute;
+}
+
+#game {
+    width: 800px;
+    height: 480px;
+    margin: auto;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: #C1C1C1;
+}
+
+#map {
+    width: 480px;
+    height: 320px;
+    left: 0px;
+    top: 0px;
+}
+
+#inventory {
+    width: 320px;
+    height: 320px;
+    left: 480px;
+    top: 0px;
+}
+
+#chat {
+    width: 800px;
+    height: 160px;
+    left: 0px;
+    top: 320px;
+}
