@@ -45,3 +45,13 @@ body {
     left: 0px;
     top: 320px;
 }
+
+#map canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+#load img {
+    visibility: hidden;
+}

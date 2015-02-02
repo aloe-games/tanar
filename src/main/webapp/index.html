@@ -3,15 +3,25 @@
     <head>
         <title>Tanar</title>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <link href="main.css" rel="stylesheet" type="text/css">
         <script src="main.js" type="text/javascript"></script>
     </head>
     <body>
         <div id="game">
-            <div id="map">Map</div>
+            <div id="map">
+                <canvas id="static">
+                </canvas>
+                <canvas id="dynamic">
+                </canvas>
+            </div>
             <div id="inventory">Inventory</div>
             <div id="chat">Chat</div>
+        </div>
+        <div id="load">
+            <img id="tileset" src="tileset.png" alt="tileset">
+            <img id="player" src="player.png" alt="player">
+            <img id="objects" src="objects.png" alt="objects">
         </div>
     </body>
 </html>
