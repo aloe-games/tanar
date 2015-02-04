@@ -62,8 +62,8 @@ var velocity = 4;
 //chat handle
 var messages;
 
-//a star graph
-var graph;
+//init astar graph
+var init_graph;
 
 var receive = function(data) {
     var command = data.command;
@@ -74,7 +74,7 @@ var receive = function(data) {
         objectsMap = data.objects;
         mapWidth = data.width;
     	mapHeight = data.height;
-        var init_graph = new Array(data.height);
+        init_graph = new Array(data.height);
         for (var i = 0; i < data.height; i++) {
             init_graph[i] = new Array(data.width);
         }
@@ -85,7 +85,6 @@ var receive = function(data) {
                 k++;
             }
         }
-        graph = new Graph(init_graph);
         initialize();
     }
     
@@ -94,7 +93,7 @@ var receive = function(data) {
     }
     
     if (command === 'move') {
-        update(data.id, data.x, data.y)
+        update(data.id, data.x, data.y);
     }
     
     if (command === 'message') {
@@ -225,24 +224,29 @@ function Character(id, position, target)
     this.direction = 0;
     this.sprite = 0;
     this.offset = {x: 0, y: 0};
+    this.path = [];
     this.goTo = function(x, y)
     {
         //if not moving
         if (this.position.x === this.target.x && this.position.y === this.target.y)
         {
-            this.target.x = x;
-            this.target.y= y;
+            var graph = new Graph(init_graph);
+            this.path = astar.search(graph, graph.grid[this.position.y][this.position.x], graph.grid[y][x]);
+            if (this.path.length > 0) {
+                this.target.x = this.path[0].y;
+                this.target.y = this.path[0].x;
+            }
         }
         else
         {
             this.nextTarget.x = x;
-            this.nextTarget.y= y;
+            this.nextTarget.y = y;
         }
     };
     this.render = function()
     {
         //if location diffrent than target go to target
-        if (this.position.x !== this.target.x || this.position.y !== this.target.y)
+        if (this.path.length > 0)
         {
             this.sprite = (this.sprite + 1) % 4;
             
@@ -294,11 +298,24 @@ function Character(id, position, target)
                 checkNext = true;
             }
             
+            if (checkNext) {
+                this.path.shift();
+                if (this.path.length > 0) {
+                    this.target.x = this.path[0].y;
+                    this.target.y = this.path[0].x;
+                }
+            }
+            
             //check if target wasn't changed
             if(checkNext && (this.nextTarget.x !== 0 || this.nextTarget.y !== 0))
             {
-                this.target.x = this.nextTarget.x;
-                this.target.y = this.nextTarget.y;
+                var graph = new Graph(init_graph);
+                var test_path = astar.search(graph, graph.grid[this.position.y][this.position.x], graph.grid[this.nextTarget.y][this.nextTarget.x]);
+                if (test_path.length > 0) {
+                    this.path = test_path;
+                    this.target.x = this.path[0].y;
+                    this.target.y = this.path[0].x;
+                }
                 this.nextTarget.x = 0;
                 this.nextTarget.y = 0;
             }
