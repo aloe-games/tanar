@@ -40,6 +40,9 @@ public class Game extends TimerTask {
             case "move":
                 this.move(session, data);
                 break;
+            case "message":
+                this.message(session, data);
+                break;
         }
     }
 
@@ -124,5 +127,15 @@ public class Game extends TimerTask {
             .add("y", player.getY())
             .build();
         this.broadcastMessage(move.toString());
+    }
+    
+    private void message(Session session, JsonObject data) {
+        Player player = (Player) session.getUserProperties().get("player");
+        JsonObject message = Json.createObjectBuilder()
+            .add("command", "message")
+            .add("username", player.getUsername())
+            .add("content", data.getString("content"))
+            .build();
+        this.broadcastMessage(message.toString());
     }
 }

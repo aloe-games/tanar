@@ -59,9 +59,8 @@ var players = [];
 //players velocity
 var velocity = 4;
 
-//my user id
-var id;
-var map;
+//chat handle
+var messages;
 
 var receive = function(data) {
     var command = data.command;
@@ -82,10 +81,24 @@ var receive = function(data) {
     if (command === 'move') {
         update(data.id, data.x, data.y)
     }
+    
+    if (command === 'message') {
+        messages.innerHTML +=  data.username + ": " + data.content + "<br>";
+    }
 };
 
 function initialize() {
     document.getElementById('map').addEventListener("click", goTo, false);
+    document.getElementById('send').addEventListener("click", say, false);
+    document.getElementById('message').onkeypress = function(e){
+    if (!e) e = window.event;
+        var keyCode = e.keyCode || e.which;
+        if (keyCode == '13'){
+            say();
+            return false;
+        }
+    };
+    messages = document.getElementById('messages');
     staticCanvas = document.getElementById('static');
     staticContext = staticCanvas.getContext('2d');
     dynamicCanvas = document.getElementById('dynamic');
@@ -180,6 +193,12 @@ function goTo(event)
     var x = Math.floor((event.clientX - parseInt(staticCanvas.style.left, 10) - parseInt(map.offsetLeft, 10)) / 32);
     var y = Math.floor((event.clientY - parseInt(staticCanvas.style.top, 10) - parseInt(map.offsetTop, 10)) / 32);
     send({command: 'move', x: x, y: y});
+}
+
+function say() {
+    var content = document.getElementById("message");
+    send({command: 'message', content: content.value});
+    content.value = '';
 }
 
 function Character(id, position, target)

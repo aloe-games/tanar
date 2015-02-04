@@ -55,3 +55,12 @@ body {
 #load img {
     visibility: hidden;
 }
+
+#chat #messages {
+    height: 130px;
+    overflow: auto;
+}
+
+#chat #form {
+    height: 30px;
+}
