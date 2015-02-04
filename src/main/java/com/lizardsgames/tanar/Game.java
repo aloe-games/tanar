@@ -2,7 +2,6 @@ package com.lizardsgames.tanar;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Set;
 import java.util.Timer;

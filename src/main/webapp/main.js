@@ -62,6 +62,9 @@ var velocity = 4;
 //chat handle
 var messages;
 
+//a star graph
+var graph;
+
 var receive = function(data) {
     var command = data.command;
     
@@ -71,6 +74,18 @@ var receive = function(data) {
         objectsMap = data.objects;
         mapWidth = data.width;
     	mapHeight = data.height;
+        var init_graph = new Array(data.height);
+        for (var i = 0; i < data.height; i++) {
+            init_graph[i] = new Array(data.width);
+        }
+        var k = 0;
+        for (var i = 0; i < data.height; i++) {
+            for (var j = 0; j < data.width; j++) {
+                init_graph[i][j] = map[k] == 3 ? 0 : 1;
+                k++;
+            }
+        }
+        graph = new Graph(init_graph);
         initialize();
     }
     
