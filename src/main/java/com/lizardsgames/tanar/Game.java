@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.websocket.Session;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 public class Game extends TimerTask {
 
@@ -77,7 +78,7 @@ public class Game extends TimerTask {
     }
     
     private void join(Session session, JsonObject data) {
-        String username = data.getString("username");
+        String username = StringEscapeUtils.escapeHtml4(data.getString("username"));
         Player player = new Player(this.playerCounter++, username);
         session.getUserProperties().put("player", player);
         JsonObject join = Json.createObjectBuilder()
@@ -133,7 +134,7 @@ public class Game extends TimerTask {
         JsonObject message = Json.createObjectBuilder()
             .add("command", "message")
             .add("username", player.getUsername())
-            .add("content", data.getString("content"))
+            .add("content", StringEscapeUtils.escapeHtml4(data.getString("content")))
             .build();
         this.broadcastMessage(message.toString());
     }
