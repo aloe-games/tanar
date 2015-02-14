@@ -85,6 +85,7 @@ public class Game extends TimerTask {
                 .add("command", "join")
                 .add("id", player.getId())
                 .add("username", player.getUsername())
+                .add("image", player.getImage())
                 .add("x", player.getX())
                 .add("y", player.getY())
                 .build();

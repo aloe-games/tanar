@@ -1,17 +1,23 @@
 package com.lizardsgames.tanar;
 
+import java.util.Random;
+
 public class Player {
 
     private int id;
     private String username;
     private int x;
     private int y;
+    private String image;
+    private static String[] images = new String[]{"player", "guy", "girl"};
     
     public Player(int id, String username) {
         this.id = id;
         this.username = username;
         this.x = 3;
         this.y = 2;
+        int rand = new Random().nextInt(images.length);
+        this.image = images[rand];
     }
     
     @Override
@@ -53,5 +59,9 @@ public class Player {
 
     public void setY(int y) {
         this.y = y;
+    }
+    
+    public String getImage() {
+        return this.image;
     }
 }

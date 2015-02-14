@@ -36,7 +36,7 @@ var dynamicContext;
 
 //images for tileset and players
 var tileImage;
-var playerImage;
+var playerImages = {};
 var objectsImage;
 
 //map size
@@ -91,7 +91,7 @@ var receive = function(data) {
     }
     
     if (command === 'join') {
-        players[players.length] = new Character(data.id, {x: data.x, y: data.y}, {x: data.x, y: data.y});
+        players[players.length] = new Character(data.id, {x: data.x, y: data.y}, {x: data.x, y: data.y}, data.image);
     }
     
     if (command === 'move') {
@@ -124,7 +124,9 @@ function initialize() {
     dynamicCanvas.width = mapWidth * tileSize;
     dynamicCanvas.height = mapHeight * tileSize;
     tileImage = document.getElementById('tileset');
-    playerImage = document.getElementById('player');
+    playerImages['player'] = document.getElementById('player');
+    playerImages['guy'] = document.getElementById('guy');
+    playerImages['girl'] = document.getElementById('girl');
     objectsImage = document.getElementById('objects');
     drawMap();
     setInterval(renderFrame, 125);
@@ -167,9 +169,9 @@ function drawPlayers() {
     }
 }
 
-function drawPlayerTile(x, y, direction, sprite) {
+function drawPlayerTile(x, y, direction, sprite, image) {
     dynamicContext.drawImage(
-        playerImage,
+        playerImages[image],
         sprite * tileSize,
         direction * playerTileHeight,
         tileSize,
@@ -217,7 +219,7 @@ function say() {
     content.value = '';
 }
 
-function Character(id, position, target)
+function Character(id, position, target, image)
 {
     this.playerId = id;
     this.position = position;
@@ -227,6 +229,7 @@ function Character(id, position, target)
     this.sprite = 0;
     this.offset = {x: 0, y: 0};
     this.path = [];
+    this.image = image;
     this.goTo = function(x, y)
     {
         //if not moving
@@ -325,7 +328,7 @@ function Character(id, position, target)
         
         var x = this.position.x * tileSize + this.offset.x;
         var y = this.position.y * tileSize + this.offset.y;
-        drawPlayerTile(x, y, this.direction, this.sprite);
+        drawPlayerTile(x, y, this.direction, this.sprite, this.image);
         if (this.playerId === myPlayerId)
             centerMap(x, y);
     };
