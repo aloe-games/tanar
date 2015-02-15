@@ -37,7 +37,6 @@ var dynamicContext;
 //images for tileset and players
 var tileImage;
 var playerImages = {};
-var objectsImage;
 
 //map size
 var mapWidth;
@@ -83,7 +82,7 @@ var receive = function(data) {
         var k = 0;
         for (var i = 0; i < data.height; i++) {
             for (var j = 0; j < data.width; j++) {
-                init_graph[i][j] = map[k] == 3 ? 0 : 1;
+                init_graph[i][j] = (map[k] == 5 || (map[k] > 42 && map[k] <= 54)) ? 0 : 1;
                 k++;
             }
         }
@@ -149,9 +148,9 @@ function centerMap(x, y) {
 function drawMap() {
     for (var i = 0, k = 0; i < mapHeight; i++) {
         for (var j = 0; j < mapWidth; j++) {
-            drawTile(tileImage, 0, map[k], j, i);
+            drawTile(tileImage, map[k], j, i);
             if (objectsMap[k]) {
-                drawTile(objectsImage, 4, objectsMap[k], j, i);
+                drawTile(tileImage, objectsMap[k], j, i);
             }
             k++;
         }
@@ -183,11 +182,12 @@ function drawPlayerTile(x, y, direction, sprite, image) {
     );
 }
 
-function drawTile(image, offset, tile, x, y) {
+function drawTile(image, tile, x, y) {
+    tile--;
     staticContext.drawImage(
         image,
-        (tile - offset - 1) * tileSize,
-        0,
+        (tile % 6) * tileSize,
+        Math.floor(tile / 6) * tileSize,
         tileSize,
         tileSize,
         x * tileSize,

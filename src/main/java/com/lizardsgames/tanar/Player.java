@@ -14,8 +14,8 @@ public class Player {
     public Player(int id, String username) {
         this.id = id;
         this.username = username;
-        this.x = 3;
-        this.y = 2;
+        this.x = 6;
+        this.y = 5;
         int rand = new Random().nextInt(images.length);
         this.image = images[rand];
     }
