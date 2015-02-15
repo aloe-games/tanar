@@ -1,5 +1,8 @@
 package com.lizardsgames.tanar;
 
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -7,10 +10,11 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint("/server")
-public class Server {
+@WebListener
+@ServerEndpoint(value="/server")
+public class Server implements ServletContextListener {
 
-    private static Game game = new Game();
+    private static Game game;
 
     @OnOpen
     public void onOpen(Session session) {
@@ -30,5 +34,14 @@ public class Server {
     @OnError
     public void onError(Session session, Throwable th) {
         game.onError(session, th);
+    }
+
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+        game = new Game(sce.getServletContext().getRealPath("/"));
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
     }
 }
