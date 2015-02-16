@@ -29,6 +29,10 @@ public class Game extends TimerTask {
         timer.schedule(this, 1000, 1000);
     }
     
+    public void stop() {
+        timer.cancel();
+    }
+    
     public void onOpen(Session session) {
         sessions.add(session);
     }
