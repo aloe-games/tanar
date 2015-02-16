@@ -98,6 +98,12 @@ var receive = function(data) {
     
     if (command === 'message') {
         messages.innerHTML +=  data.username + ": " + data.content + "<br>";
+        for (var p = 0; p < players.length; p++)
+            if (players[p].playerId == data.id) {
+                players[p].setMessage(data.content);
+                break;
+            }
+        messages.scrollTop = messages.scrollHeight;
     }
 };
 
@@ -181,8 +187,19 @@ function drawPlayerTile(x, y, direction, sprite, image, message) {
         tileSize,
         playerTileHeight
     );
-    if (message.length)
-       dynamicContext.fillText(message, x, y);
+    if (message.length) {
+        if (message.length > 16)
+            message = message.substring(0, 16) + '...';
+        var width = dynamicContext.measureText(message).width;
+        var textX = x - ((width - tileSize) / 2);
+        var textY = y - (playerTileHeight - tileSize) - 5;
+        dynamicContext.beginPath();
+        dynamicContext.rect(textX - 5, textY - 15, width + 10, 13 + 8);
+        dynamicContext.fillStyle = 'black';
+        dynamicContext.fill();
+        dynamicContext.fillStyle = 'yellow';
+        dynamicContext.fillText(message, textX, textY);
+    }
 }
 
 function drawTile(image, tile, x, y) {
@@ -233,7 +250,7 @@ function Character(id, position, target, image)
     this.offset = {x: 0, y: 0};
     this.path = [];
     this.image = image;
-    this.message = "test";
+    this.message = "";
     this.goTo = function(x, y)
     {
         //if not moving
