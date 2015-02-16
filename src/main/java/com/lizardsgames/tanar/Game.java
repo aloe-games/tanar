@@ -137,10 +137,14 @@ public class Game extends TimerTask {
     
     private void message(Session session, JsonObject data) {
         Player player = (Player) session.getUserProperties().get("player");
+        String userMessage = StringEscapeUtils.escapeHtml4(data.getString("content"));
+        player.setMessage(userMessage);
+        player.setMessage(path);
         JsonObject message = Json.createObjectBuilder()
             .add("command", "message")
             .add("username", player.getUsername())
-            .add("content", StringEscapeUtils.escapeHtml4(data.getString("content")))
+            .add("id", player.getId())
+            .add("content", userMessage)
             .build();
         this.broadcastMessage(message.toString());
     }

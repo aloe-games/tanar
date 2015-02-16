@@ -10,6 +10,7 @@ public class Player {
     private int y;
     private String image;
     private static String[] images = new String[]{"player", "guy", "girl"};
+    private String lastMessage;
     
     public Player(int id, String username) {
         this.id = id;
@@ -63,5 +64,13 @@ public class Player {
     
     public String getImage() {
         return this.image;
+    }
+    
+    public String getMessage() {
+        return lastMessage;
+    }
+    
+    public void setMessage(String message) {
+        lastMessage = message;
     }
 }

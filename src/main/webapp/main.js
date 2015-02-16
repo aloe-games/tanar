@@ -8,8 +8,6 @@ var connect = function() {
     websocket.onerror = console.log;
     websocket.onclose = console.log;
     websocket.onmessage = function(message) {
-        message = replaceAll('"[', '[', message.data);
-        message = replaceAll(']"', ']', message);
         console.log("Recieve: " + message);
         receive(JSON.parse(message));
     };
@@ -168,7 +166,8 @@ function drawPlayers() {
     }
 }
 
-function drawPlayerTile(x, y, direction, sprite, image) {
+function drawPlayerTile(x, y, direction, sprite, image, message) {
+    console.log('show cloud' + message);
     dynamicContext.drawImage(
         playerImages[image],
         sprite * tileSize,
@@ -230,6 +229,7 @@ function Character(id, position, target, image)
     this.offset = {x: 0, y: 0};
     this.path = [];
     this.image = image;
+    this.message = "";
     this.goTo = function(x, y)
     {
         //if not moving
@@ -328,18 +328,13 @@ function Character(id, position, target, image)
         
         var x = this.position.x * tileSize + this.offset.x;
         var y = this.position.y * tileSize + this.offset.y;
-        drawPlayerTile(x, y, this.direction, this.sprite, this.image);
+        drawPlayerTile(x, y, this.direction, this.sprite, this.image, this.message);
         if (this.playerId === myPlayerId)
             centerMap(x, y);
     };
-}
-
-function escapeRegExp(string) {
-    return string.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
-}
-
-function replaceAll(find, replace, string) {
-    return string.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+    this.setMessage = function(message) {
+        this.message = message;
+    };
 }
 
 function setCookie(cname, cvalue, exdays) {
