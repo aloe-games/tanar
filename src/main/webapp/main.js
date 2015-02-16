@@ -121,6 +121,8 @@ function initialize() {
     staticCanvas.height = mapHeight * tileSize;
     dynamicCanvas.width = mapWidth * tileSize;
     dynamicCanvas.height = mapHeight * tileSize;
+    dynamicContext.font="bold 13px Tahoma";
+    dynamicContext.fillStyle="yellow";
     tileImage = document.getElementById('tileset');
     playerImages['player'] = document.getElementById('player');
     playerImages['guy'] = document.getElementById('guy');
@@ -168,8 +170,6 @@ function drawPlayers() {
 }
 
 function drawPlayerTile(x, y, direction, sprite, image, message) {
-    if (message.length)
-       dynamicContext.fillText(message, x, y);
     dynamicContext.drawImage(
         playerImages[image],
         sprite * tileSize,
@@ -181,6 +181,8 @@ function drawPlayerTile(x, y, direction, sprite, image, message) {
         tileSize,
         playerTileHeight
     );
+    if (message.length)
+       dynamicContext.fillText(message, x, y);
 }
 
 function drawTile(image, tile, x, y) {

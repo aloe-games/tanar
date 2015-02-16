@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -6,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <link href="main.css" rel="stylesheet" type="text/css">
         <script src="astar.js" type="text/javascript"></script>
-        <script src="main.js" type="text/javascript"></script>
+        <script src="main.js?v=<%= (System.currentTimeMillis() / 1000L) %>" type="text/javascript"></script>
     </head>
     <body>
         <div id="game">
