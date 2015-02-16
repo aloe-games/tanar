@@ -8,7 +8,8 @@ var connect = function() {
     websocket.onerror = console.log;
     websocket.onclose = console.log;
     websocket.onmessage = function(message) {
-        console.log("Recieve: " + message);
+        message = message.data;
+        console.log("Receive:" + message);
         receive(JSON.parse(message));
     };
     var username = prompt("Username:", getCookie("username"));
@@ -167,7 +168,8 @@ function drawPlayers() {
 }
 
 function drawPlayerTile(x, y, direction, sprite, image, message) {
-    console.log('show cloud' + message);
+    if (message.length)
+       dynamicContext.fillText(message, x, y);
     dynamicContext.drawImage(
         playerImages[image],
         sprite * tileSize,
@@ -229,7 +231,7 @@ function Character(id, position, target, image)
     this.offset = {x: 0, y: 0};
     this.path = [];
     this.image = image;
-    this.message = "";
+    this.message = "test";
     this.goTo = function(x, y)
     {
         //if not moving
