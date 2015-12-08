@@ -4,7 +4,11 @@ var websocket;
 
 var connect = function() {
     websocket = new WebSocket("ws://" + document.location.host + document.location.pathname + "server");
-    websocket.onopen = console.log;
+    websocket.onopen = function () {
+        var username = prompt("Username:", getCookie("username"));
+        setCookie("username", username, 365);
+        send({command: 'join', username: username});
+    };
     websocket.onerror = console.log;
     websocket.onclose = console.log;
     websocket.onmessage = function(message) {
@@ -12,9 +16,6 @@ var connect = function() {
         console.log("Receive:" + message);
         receive(JSON.parse(message));
     };
-    var username = prompt("Username:", getCookie("username"));
-    setCookie("username", username, 365);
-    send({command: 'join', username: username});
 };
 
 var send = function (data) {
