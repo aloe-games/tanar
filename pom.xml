@@ -58,6 +58,7 @@
                 <version>2.3</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <warName>Tanar</warName>
                 </configuration>
             </plugin>
             <plugin>
