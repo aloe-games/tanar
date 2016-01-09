@@ -58,7 +58,6 @@
                 <version>2.3</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <warName>ROOT</warName>
                 </configuration>
             </plugin>
             <plugin>
