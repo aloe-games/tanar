@@ -2,7 +2,18 @@ image: maven:latest
 pipelines:
   default:
     - step:
+        name: "Build"
         script:
           - mvn install
+          - cp $WAR_PATH build.war
+        artifacts:
+          - build.war
+    - step:
+        name: "Undeploy"
+        script:
           - curl "https://$TOMCAT_USER:$TOMCAT_PASSWORD@$TOMCAT_SERVER:443/manager/text/undeploy?path=$APP_PATH"
-          - curl --upload-file $WAR_PATH "https://$TOMCAT_USER:$TOMCAT_PASSWORD@$TOMCAT_SERVER:443/manager/text/deploy?path=$APP_PATH"
+    - step:
+        name: "Deploy"
+        deployment: production
+        script:
+          - curl --upload-file build.war "https://$TOMCAT_USER:$TOMCAT_PASSWORD@$TOMCAT_SERVER:443/manager/text/deploy?path=$APP_PATH"
