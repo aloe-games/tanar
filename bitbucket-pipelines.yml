@@ -4,3 +4,5 @@ pipelines:
     - step:
         script:
           - mvn install
+          - curl "https://$TOMCAT_USER:$TOMCAT_PASSWORD@$TOMCAT_SERVER:443/manager/text/undeploy?path=$APP_PATH"
+          - curl --upload-file $WAR_PATH "https://$TOMCAT_USER:$TOMCAT_PASSWORD@$TOMCAT_SERVER:443/manager/text/deploy?path=$APP_PATH"
