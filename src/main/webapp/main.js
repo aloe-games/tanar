@@ -3,7 +3,11 @@ window.addEventListener("load", function() {connect();}, false);
 var websocket;
 
 var connect = function() {
-    websocket = new WebSocket("wss://" + document.location.host + document.location.pathname + "server");
+    websocketProtocol = "ws:";
+    if (document.location.protocol == "https:") {
+        websocketProtocol = "wss:";
+    }
+    websocket = new WebSocket(websocketProtocol + "//" + document.location.host + document.location.pathname + "server");
     websocket.onopen = function () {
         var username = prompt("Username:", getCookie("username"));
         setCookie("username", username, 365);

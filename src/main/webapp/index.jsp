@@ -17,7 +17,7 @@
                 <canvas id="dynamic">
                 </canvas>
             </div>
-            <div id="inventory">Inventory2</div>
+            <div id="inventory">Inventory</div>
             <div id="chat">
                 <div id="messages">
                 </div>

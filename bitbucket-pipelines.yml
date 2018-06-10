@@ -5,9 +5,9 @@ pipelines:
         name: "Build"
         script:
           - mvn install
-          - cp $WAR_PATH build.war
+          - cp $WAR_PATH App.war
         artifacts:
-          - build.war
+          - App.war
     - step:
         name: "Undeploy"
         script:
@@ -16,4 +16,4 @@ pipelines:
         name: "Deploy"
         deployment: production
         script:
-          - curl --upload-file build.war "https://$TOMCAT_USER:$TOMCAT_PASSWORD@$TOMCAT_SERVER:443/manager/text/deploy?path=$APP_PATH"
+          - curl --upload-file App.war "https://$TOMCAT_USER:$TOMCAT_PASSWORD@$TOMCAT_SERVER:443/manager/text/deploy?path=$APP_PATH"
