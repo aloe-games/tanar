@@ -17,8 +17,11 @@ public class Player {
         this.username = username;
         this.x = 6;
         this.y = 5;
-        int rand = new Random().nextInt(images.length);
-        this.image = images[rand];
+        if (username.charAt(username.length() - 1) == 'a') {
+            this.image = images[2];
+        } else {
+            this.image = images[new Random().nextInt(images.length - 1)];
+        }
     }
     
     @Override
