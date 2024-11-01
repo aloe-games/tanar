@@ -25,17 +25,25 @@ class Game:
         self.map = Map()
         self.players = {}
 
-    def handle_command(self, id, command):
+    def handle_message(self, id, message):
         to_player = []
         to_players = []
 
-        if command["command"] == "join":
-            player = Player(id, command["username"])
+        command = message["command"]
+
+        if command == "join":
+            player = Player(id, message["username"])
             self.players[id] = player
             to_players.append({'command': 'join', 'id': player.id, 'username': player.username, 'image': player.image, 'x': player.x, 'y': player.y})
             to_player.append({'command': 'init', 'id': player.id, 'width': self.map.width, 'height': self.map.height, 'map': self.map.tiles, 'objects': self.map.objects})
             for player in self.players.values():
                 if player.id != id:
                     to_player.append({'command': 'join', 'id': player.id, 'username': player.username, 'image': player.image, 'x': player.x, 'y': player.y})
+
+        if command == "message":
+            content = message["content"]
+            player = self.players[id]
+            player.last_message = content
+            to_players.append({'command': 'message', 'id': player.id, 'username': player.username, 'content': content})
 
         return to_player, to_players

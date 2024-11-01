@@ -12,7 +12,7 @@ class Server:
         if client not in self.clients:
             self.clients.append(client)
         id = self.clients.index(client) + 1
-        to_client, for_broadcast = self.game.handle_command(id, json.loads(message))
+        to_client, for_broadcast = self.game.handle_message(id, json.loads(message))
         for message in to_client:
             client.send(json.dumps(message))
         for message in for_broadcast:
