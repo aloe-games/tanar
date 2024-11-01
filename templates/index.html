@@ -1,13 +1,12 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <title>Tanar</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <link href="main.css" rel="stylesheet" type="text/css">
-        <script src="astar.js" type="text/javascript"></script>
-        <script src="main.js?v=<%= (System.currentTimeMillis() / 1000L) %>" type="text/javascript"></script>
+        <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css">
+        <script src="{{ url_for('static', filename='astar.js') }}" type="text/javascript"></script>
+        <script src="{{ url_for('static', filename='main.js') }}" type="text/javascript"></script>
     </head>
     <body>
         <div id="game">
@@ -28,10 +27,10 @@
             </div>
         </div>
         <div id="load">
-            <img id="tileset" src="tileset.png">
-            <img id="player" src="player.png">
-            <img id="guy" src="guy.png">
-            <img id="girl" src="girl.png">
+            <img id="tileset" src="{{ url_for('static', filename='tileset.png') }}">
+            <img id="player" src="{{ url_for('static', filename='player.png') }}">
+            <img id="guy" src="{{ url_for('static', filename='guy.png') }}">
+            <img id="girl" src="{{ url_for('static', filename='girl.png') }}">
         </div>
     </body>
 </html>
