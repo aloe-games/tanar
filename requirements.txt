@@ -1,3 +1,5 @@
 Flask
 flask-sock
 gunicorn
+requests
+openai
