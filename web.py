@@ -17,7 +17,7 @@ def index():
 
 
 @sock.route('/server')
-def server(client):
+def socket(client):
     while True:
         server.message(client, client.receive())
 

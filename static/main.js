@@ -9,7 +9,7 @@ var connect = function() {
     }
     websocket = new WebSocket(websocketProtocol + "//" + document.location.host + document.location.pathname + "server");
     websocket.onopen = function () {
-        var username = prompt("Username:", getCookie("username"));
+        var username = prompt("Username:", getCookie("username") || "Frodo");
         setCookie("username", username, 365);
         send({command: 'join', username: username});
     };

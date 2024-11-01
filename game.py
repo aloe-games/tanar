@@ -1,5 +1,7 @@
 import json
 
+from bot import Chat
+
 
 class Map:
     def __init__(self):
@@ -23,7 +25,9 @@ class Player:
 class Game:
     def __init__(self):
         self.map = Map()
-        self.players = {}
+        self.players = {0: Player(0, "Aragorn")}
+        self.players[0].x += 1
+        self.bot = Chat("You are Aragorn from Lord of the rings. We are playing a scene in prancing pony. Talk to Frodo, convince him that he is danger and you need to hide.")
 
     def handle_message(self, id, message):
         to_player = []
@@ -45,6 +49,8 @@ class Game:
             player = self.players[id]
             player.last_message = content
             to_players.append({'command': 'message', 'id': player.id, 'username': player.username, 'content': content})
+            reply = self.bot.message(content)
+            to_players.append({'command': 'message', 'id': 0, 'username': self.players[0].username, 'content': reply})
 
         if command == "move":
             x = message["x"]
