@@ -46,4 +46,12 @@ class Game:
             player.last_message = content
             to_players.append({'command': 'message', 'id': player.id, 'username': player.username, 'content': content})
 
+        if command == "move":
+            x = message["x"]
+            y = message["y"]
+            player = self.players[id]
+            player.x = x
+            player.y = y
+            to_players.append({'command': 'move', 'id': player.id, 'x': x, 'y': y})
+
         return to_player, to_players
