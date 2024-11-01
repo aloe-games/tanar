@@ -30,9 +30,12 @@ class Game:
         to_players = []
 
         if command["command"] == "join":
-            username = command["username"]
-            self.players[id] = Player(id, username)
-            to_player.append({'command': 'join', 'id': 3, 'username': username, 'image': 'guy', 'x': 6, 'y': 5})
-            to_player.append({'command': 'init', 'id': 3, 'width': self.map.width, 'height': self.map.height, 'map': self.map.tiles, 'objects': self.map.objects})
+            player = Player(id, command["username"])
+            self.players[id] = player
+            to_players.append({'command': 'join', 'id': player.id, 'username': player.username, 'image': player.image, 'x': player.x, 'y': player.y})
+            to_player.append({'command': 'init', 'id': player.id, 'width': self.map.width, 'height': self.map.height, 'map': self.map.tiles, 'objects': self.map.objects})
+            for player in self.players.values():
+                if player.id != id:
+                    to_player.append({'command': 'join', 'id': player.id, 'username': player.username, 'image': player.image, 'x': player.x, 'y': player.y})
 
         return to_player, to_players
