@@ -1,8 +1,7 @@
-import json
-
 from flask import Flask
 from flask import render_template
 from flask_sock import Sock
+
 from server import Server
 
 app = Flask(__name__)
@@ -16,6 +15,6 @@ def index():
 
 
 @sock.route('/server')
-def echo(ws):
+def echo(client):
     while True:
-        server.message(ws, json.loads(ws.receive()))
+        server.message(client, client.receive())
