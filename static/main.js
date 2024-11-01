@@ -72,7 +72,7 @@ var init_graph;
 
 var receive = function(data) {
     var command = data.command;
-    
+
     if(command == 'init') {
         myPlayerId = data.id;
         map = data.map;
@@ -92,15 +92,15 @@ var receive = function(data) {
         }
         initialize();
     }
-    
+
     if (command === 'join') {
         players[players.length] = new Character(data.id, {x: data.x, y: data.y}, {x: data.x, y: data.y}, data.image);
     }
-    
+
     if (command === 'move') {
         update(data.id, data.x, data.y);
     }
-    
+
     if (command === 'message') {
         messages.innerHTML +=  data.username + ": " + data.content + "<br>";
         for (var p = 0; p < players.length; p++)
@@ -135,7 +135,6 @@ function initialize() {
     dynamicContext.font="bold 13px Tahoma";
     dynamicContext.fillStyle="yellow";
     tileImage = document.getElementById('tileset');
-    playerImages['player'] = document.getElementById('player');
     playerImages['guy'] = document.getElementById('guy');
     playerImages['girl'] = document.getElementById('girl');
     objectsImage = document.getElementById('objects');
@@ -146,13 +145,13 @@ function initialize() {
 function centerMap(x, y) {
     x -= tileSize * 7.5;
     y -= tileSize * 5;
-    
+
     x = Math.max(0, x);
     y = Math.max(0, y);
-    
+
     x = Math.min((mapWidth - (7.5 * 2)) * tileSize, x);
     y = Math.min((mapHeight - (5 * 2)) * tileSize, y);
-    
+
     staticCanvas.style.left = dynamicCanvas.style.left = '-' + x + 'px';
     staticCanvas.style.top = dynamicCanvas.style.top = '-' + y + 'px';
 }
@@ -280,7 +279,7 @@ function Character(id, position, target, image)
         if (this.path.length > 0)
         {
             this.sprite = (this.sprite + 1) % 4;
-            
+
             //first set y
             if (this.position.y < this.target.y)
             {
@@ -301,7 +300,7 @@ function Character(id, position, target, image)
                 this.offset.x -= velocity;
                 this.direction = 1;
             }
-            
+
             //if reach new tile change location
             var checkNext = false;
             if (this.offset.y === tileSize)
@@ -328,7 +327,7 @@ function Character(id, position, target, image)
                 this.position.x--;
                 checkNext = true;
             }
-            
+
             if (checkNext) {
                 this.path.shift();
                 if (this.path.length > 0) {
@@ -336,7 +335,7 @@ function Character(id, position, target, image)
                     this.target.y = this.path[0].x;
                 }
             }
-            
+
             //check if target wasn't changed
             if(checkNext && (this.nextTarget.x !== 0 || this.nextTarget.y !== 0))
             {
@@ -351,7 +350,7 @@ function Character(id, position, target, image)
                 this.nextTarget.y = 0;
             }
         }
-        
+
         var x = this.position.x * tileSize + this.offset.x;
         var y = this.position.y * tileSize + this.offset.y;
         drawPlayerTile(x, y, this.direction, this.sprite, this.image, this.message);
@@ -368,7 +367,7 @@ function setCookie(cname, cvalue, exdays) {
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
     var expires = "expires="+d.toUTCString();
     document.cookie = cname + "=" + cvalue + "; " + expires;
-} 
+}
 
 function getCookie(cname) {
     var name = cname + "=";
